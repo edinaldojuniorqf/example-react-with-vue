@@ -22,7 +22,7 @@ export default {
             this.$emit('onFilterTextInput', e.target.value)
         },
         handleInStockeChange (e) {
-            this.$emit('onInStockeChange', e.target.value)
+            this.$emit('onInStockeChange', e.target.checked)
         }
     }
 }

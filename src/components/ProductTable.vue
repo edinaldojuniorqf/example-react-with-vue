@@ -11,9 +11,13 @@
                 <product-category-row
                     :key="product.category" 
                     :category="product.category"
-                    v-if="product.category !== products[index > 0 ? (index - 1) : 0].category">
+                    v-if="showCategory(product, index)">
                 </product-category-row>
-                <product-row :key="product.name" :product="product"></product-row>
+                <product-row
+                    v-if="(inStockOnly && product.stocked) || !inStockOnly"
+                    :key="product.name"
+                    :product="product"
+                ></product-row>
             </template>
         </tbody>
     </table>
@@ -24,11 +28,17 @@ import ProductCategoryRow from './ProductCategoryRow.vue'
 import ProductRow from './ProductRow'
 
 export default {
-    props: ['products'],
+    props: ['products', 'filterText', 'inStockOnly'],
     
     components: {
         ProductCategoryRow,
         ProductRow
+    },
+
+    methods: {
+        showCategory (product, index) {
+            return product.category !== this.products[index > 0 ? (index - 1) : 0].category
+        }
     }
 }
 </script>
