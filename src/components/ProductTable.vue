@@ -8,16 +8,18 @@
         </thead>
         <tbody>
             <template v-for="(product, index) in products">
-                <product-category-row
-                    :key="product.category" 
-                    :category="product.category"
-                    v-if="showCategory(product, index)">
-                </product-category-row>
-                <product-row
-                    v-if="(inStockOnly && product.stocked) || !inStockOnly"
-                    :key="product.name"
-                    :product="product"
-                ></product-row>
+                <template v-if="product.name.toLowerCase().indexOf(filterText.toLowerCase()) !== -1">
+                    <product-category-row
+                        :key="product.category" 
+                        :category="product.category"
+                        v-if="showCategory(product, index)">
+                    </product-category-row>
+                    <product-row
+                        v-if="(inStockOnly && product.stocked) || !inStockOnly"
+                        :key="product.name"
+                        :product="product"
+                    ></product-row>
+                </template>
             </template>
         </tbody>
     </table>
@@ -33,6 +35,12 @@ export default {
     components: {
         ProductCategoryRow,
         ProductRow
+    },
+
+    computed: {
+        _products (products) {
+
+        }
     },
 
     methods: {
